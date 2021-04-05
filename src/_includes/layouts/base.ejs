@@ -46,54 +46,32 @@
         "@context": "http://schema.org"
       }
     </script>
-    <% } %><%- include('webpack.ejs') %> <% if (page.url == "/") { %>
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-    <script>
-      if (window.netlifyIdentity) {
-        window.netlifyIdentity.on('init', (user) => {
-          if (!user) {
-            window.netlifyIdentity.on('login', () => {
-              document.location.href = '/admin/';
-            });
-          }
-        });
-      }
-    </script>
     <% } %>
+    <!-- <%- include('webpack.ejs') %> -->
+    <link
+      href="/assets/styles/main.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <script src="/assets/js/main.js" defer></script>
   </head>
 
-  <body class="antialiased w-full text-gray-700">
-    <div class="max-w-screen-md mx-auto">
-      <div class="border-b border-gray-300">
-        <div class="pt-16 pb-8">
-          <h1 class="font-semibold text-3xl text-gray-800"><%= site.title %></h1>
-          <div class="text-xl"><%= site.description %></div>
+  <body>
+    <!-- Nav Here-->
+    <%- include('nav.ejs') %>
+    <!-- Container -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mx-auto">
+        <!-- Content here -->
+        <!-- This example requires Tailwind CSS v2.0+ -->
+        <div class="text-xl py-5">
+          <%- content %>
         </div>
-        <nav>
-          <ul class="flex flex-wrap text-xl">
-            <li class="mr-6">
-              <a class="text-gray-700 border-none hover:no-underline hover:text-gray-800" href="/"
-                >Home</a
-              >
-            </li>
-            <li class="mr-6">
-              <a
-                class="text-gray-700 border-none hover:no-underline hover:text-gray-800"
-                href="https://github.com/ixartz/Eleventy-Starter-Boilerplate"
-              >
-                GitHub
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </div>
 
-      <div class="text-xl py-5"><%- content %></div>
+        <!-- Footer here -->
+        <%- include('footer.ejs') %>
 
-      <div class="border-t border-gray-300 text-center py-8">
-        Made with <span role="img" aria-label="Love">♥</span> by
-        <a href="https://creativedesignsguru.com">CreativeDesignsGuru</a>
       </div>
-    </div>
+    </div> <!-- End of container-->
   </body>
 </html>

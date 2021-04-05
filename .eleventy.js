@@ -2,9 +2,12 @@ const htmlmin = require('html-minifier');
 const dateFns = require('date-fns');
 const lazyImagesPlugin = require('eleventy-plugin-lazyimages');
 const syntaxHighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
+const slugify = require('slugify');
 
 module.exports = function (eleventyConfig) {
   eleventyConfig.addPlugin(syntaxHighlight);
+
+  eleventyConfig.addPassthroughCopy('src/assets/js');
 
   eleventyConfig.addPlugin(lazyImagesPlugin, {
     transformImgPath: (imgPath) => {
@@ -25,7 +28,7 @@ module.exports = function (eleventyConfig) {
   });
 
   eleventyConfig.setBrowserSyncConfig({
-    files: './_site/assets/styles/main.css',
+    files: ['./_site/assets/styles/main.css', './_site/assets/js/main.js'],
   });
 
   eleventyConfig.addTransform('htmlmin', (content, outputPath) => {
@@ -40,6 +43,20 @@ module.exports = function (eleventyConfig) {
     }
 
     return content;
+  });
+
+  eleventyConfig.addFilter('slug', (input) => {
+    const options = {
+      replacement: '-',
+      remove: /[&,+()$~%.'":*?<>{}]/g,
+      lower: true,
+    };
+    return slugify(input, options);
+  });
+
+  eleventyConfig.addFilter('debugger', (...args) => {
+    console.log(...args);
+    debugger;
   });
 
   return {
